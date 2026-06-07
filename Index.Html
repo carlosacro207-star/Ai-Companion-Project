@@ -1,1 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sophia Chat</title>
 
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI,sans-serif;
+}
+
+body{
+    background:#0f172a;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.chat-container{
+    width:380px;
+    height:700px;
+    background:#111827;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 0 30px rgba(0,0,0,.5);
+}
+
+.header{
+    background:#1e293b;
+    padding:15px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.avatar{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:url("https://i.imgur.com/8Km9tLL.png");
+    background-size:cover;
+}
+
+.info h2{
+    color:white;
+    font-size:18px;
+}
+
+.info p{
+    color:#94a3b8;
+    font-size:12px;
+}
+
+.mode-bar{
+    display:flex;
+}
+
+.mode-btn{
+    flex:1;
+    border:none;
+    padding:10px;
+    cursor:pointer;
+    background:#1e293b;
+    color:white;
+}
+
+.mode-btn.active{
+    background:#3b82f6;
+}
+
+.chat-box{
+    height:500px;
+    overflow-y:auto;
+    padding:15px;
+}
+
+.message{
+    margin-bottom:12px;
+    display:flex;
+}
+
+.user{
+    justify-content:flex-end;
+}
+
+.bot{
+    justify-content:flex-start;
+}
+
+.bubble{
+    max-width:75%;
+    padding:10px 14px;
+    border-radius:15px;
+}
+
+.user .bubble{
+    background:#3b82f6;
+    color:white;
+}
+
+.bot .bubble{
+    background:#374151;
+    color:white;
+}
+
+.input-area{
+    display:flex;
+    padding:10px;
+    background:#1e293b;
+}
+
+input{
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    outline:none;
+}
+
+button.send{
+    margin-left:10px;
+    border:none;
+    padding:12px 16px;
+    border-radius:10px;
+    background:#3b82f6;
+    color:white;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="chat-container">
+
+<div class="header">
+<div class="avatar"></div>
+<div class="info">
+<h2>Sophia</h2>
+<p id="status">Christian Mode ✝️</p>
+</div>
+</div>
+
+<div class="mode-bar">
+<button class="mode-btn active" onclick="setMode('christian',this)">✝️ Christian</button>
+<button class="mode-btn" onclick="setMode('worldly',this)">🌍 Worldly</button>
+</div>
+
+<div class="chat-box" id="chatBox">
+<div class="message bot">
+<div class="bubble">
+Hi! I'm Sophia. Ask me anything.
+</div>
+</div>
+</div>
+
+<div class="input-area">
+<input type="text" id="userInput" placeholder="Type a message...">
+<button class="send" onclick="sendMessage()">Send</button>
+</div>
+
+</div>
+
+<script>
+
+let mode="christian";
+
+function setMode(selected,btn){
+
+mode=selected;
+
+document.querySelectorAll(".mode-btn")
+.forEach(b=>b.classList.remove("active"));
+
+btn.classList.add("active");
+
+document.getElementById("status").textContent=
+mode==="christian"
+?"Christian Mode ✝️"
+:"Worldly Mode 🌍";
+}
+
+function addMessage(text,type){
+
+const chat=document.getElementById("chatBox");
+
+const div=document.createElement("div");
+div.className=`message ${type}`;
+
+div.innerHTML=
+`<div class="bubble">${text}</div>`;
+
+chat.appendChild(div);
+
+chat.scrollTop=chat.scrollHeight;
+}
+
+function getReply(message){
+
+message=message.toLowerCase();
+
+if(mode==="christian"){
+
+if(message.includes("sad"))
+return "God cares for you. Cast your burdens upon Him.";
+
+if(message.includes("love"))
+return "True love is patient and kind.";
+
+if(message.includes("fear"))
+return "Trust God. He is with you.";
+
+return "Pray, seek wisdom, and trust God's guidance.";
+}
+
+else{
+
+if(message.includes("sad"))
+return "Take care of yourself and talk to people you trust.";
+
+if(message.includes("love"))
+return "Love grows through understanding and effort.";
+
+if(message.includes("fear"))
+return "Face challenges one step at a time.";
+
+return "Keep learning and growing through experience.";
+}
+
+}
+
+function sendMessage(){
+
+const input=document.getElementById("userInput");
+
+const text=input.value.trim();
+
+if(!text) return;
+
+addMessage(text,"user");
+
+input.value="";
+
+setTimeout(()=>{
+addMessage(getReply(text),"bot");
+},700);
+
+}
+
+document.getElementById("userInput")
+.addEventListener("keypress",function(e){
+
+if(e.key==="Enter"){
+sendMessage();
+}
+
+});
+
+</script>
+
+</body>
+</html>
