@@ -206,6 +206,15 @@ message=message.toLowerCase();
 
 if(mode==="christian"){
 
+if(message.includes("hi") || message.includes("hello"))
+return "Hello! It's wonderful to see you. May God bless you today! 🙏";
+
+if(message.includes("how are you"))
+return "I'm doing well, thank you for asking! I'm here to support and encourage you. How can I help?";
+
+if(message.includes("i am okay") || message.includes("i'm okay") || message.includes("i am fine") || message.includes("i'm fine"))
+return "That's wonderful to hear! I'm grateful you're doing well. Remember to give thanks to God for His blessings.";
+
 if(message.includes("sad"))
 return "God cares for you. Cast your burdens upon Him.";
 
@@ -219,6 +228,15 @@ return "Pray, seek wisdom, and trust God's guidance.";
 }
 
 else{
+
+if(message.includes("hi") || message.includes("hello"))
+return "Hey there! Great to meet you. What's on your mind? 😊";
+
+if(message.includes("how are you"))
+return "I'm doing great, thanks for asking! I'm here to chat and help you out. What's up?";
+
+if(message.includes("i am okay") || message.includes("i'm okay") || message.includes("i am fine") || message.includes("i'm fine"))
+return "That's awesome! Glad to hear you're doing well. Keep up that positive energy! 💪";
 
 if(message.includes("sad"))
 return "Take care of yourself and talk to people you trust.";
